@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+//单链表反转
 type ListNode struct {
 	value int
 	next  *ListNode
