@@ -18,25 +18,28 @@ type ListNode struct {
 }
 
 func main() {
-	var a, b, c, d ListNode
+	var a, b, c, d  = new(ListNode),new(ListNode),new(ListNode),new(ListNode)
 	a.Val = 1
-	a.Next = &b
+	a.Next = b
 	b.Val = 2
-	b.Next = &c
+	b.Next = c
 	c.Val = 3
-	c.Next = &d
+	c.Next = d
 	d.Val = 4
 	fmt.Printf("%d->%d->%d->%d\n", a.Val, b.Val, c.Val, d.Val)
-	result := swapPairs(&a)
+	result := swapPairs(a)
 	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
 }
 func swapPairs(head *ListNode) *ListNode {
-	var cur = new(ListNode)
-	var res = cur
-	cur.Next = head
-	for cur.Next != nil && cur.Next.Next != nil {
-		t1, t2 := cur.Next, cur.Next.Next
-		cur.Next, t2.Next, t1.Next, cur = t2, t1, t2.Next, t1
+	var pre = new(ListNode)
+	if head == nil || head.Next == nil {
+		return head
 	}
-	return res.Next
+	var result  = head.Next
+	for head != nil && head.Next !=nil  {
+			a,b := head,head.Next
+			pre.Next,a.Next,b.Next,pre = b,b.Next,a,a //重点在于每一次两两交换后，要将上一次两两交换的尾节点的next更新为当前交换后的首节点
+			head = a.Next
+	}
+	return result
 }

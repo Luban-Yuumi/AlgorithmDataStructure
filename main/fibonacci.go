@@ -9,7 +9,7 @@ func main() {
 	}
 	//Iteration
 	for i := 0; i < 10; i++ {
-		fmt.Println(fibonacciRecursive(i))
+		fmt.Println(fibonacciIteration(i))
 	}
 }
 
@@ -22,7 +22,7 @@ func fibonacciRecursive(i int) int {
 }
 
 func fibonacciIteration(i int) int {
-	if i <= 0 {
+	if i <= 1 {
 		return i
 	} else {
 		a := 0
