@@ -4,37 +4,35 @@ import (
 	"fmt"
 )
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
+type Stack []string
+
+func (s *Stack) Pop() string {
+	n := len(*s)
+	v := (*s)[n-1]
+	*s = (*s)[:n-1]
+	return v
 }
 
 func main() {
-	var a, b, c, d = new(ListNode), new(ListNode), new(ListNode), new(ListNode)
-	a.Val = 1
-	a.Next = b
-	b.Val = 2
-	b.Next = c
-	c.Val = 3
-	c.Next = d
-	d.Val = 4
-	fmt.Printf("%d->%d->%d->%d\n", a.Val, b.Val, c.Val, d.Val)
-	result := swapPairs(a)
-	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
+	s := "()"
+	fmt.Println(isValid(s))
 }
 
-func swapPairs(head *ListNode) *ListNode {
-	var pre = new(ListNode)
-	if head == nil || head.Next == nil {
-		return head
+func isValid(s string) bool {
+	var stack  = Stack{}
+	var stringMap = map[string]string{
+		"}":"{",
+		"]":"[",
+		")":"(",
 	}
-	newHead := head.Next
-	for head != nil && head.Next != nil {
-		a := head
-		b := head.Next
-		pre.Next, a.Next, b.Next, pre = b, b.Next, a, a
-		head = a.Next
+	for _,s := range s{
+		if _,ok := stringMap[string(s)];!ok {
+			stack = append(stack,s)
+		}else {
+			if len(stack) == 0 || stringMap[string(s)]!= stack.Pop() {
+				return  false
+			}
+		}
 	}
-
-	return newHead
+	return len(stack) == 0
 }
