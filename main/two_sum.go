@@ -2,9 +2,8 @@
 package main
 
 import (
-"sort"
-"fmt"
-"sync"
+	"fmt"
+	"sync"
 )
 
 var (
@@ -40,43 +39,6 @@ func algo1() []int {
 			if nums[i] + nums[j] == target {
 				return []int{i, j}
 			}
-		}
-	}
-	return noSolu
-}
-
-// O(N^2) 优化
-func algo2() []int {
-	size := len(nums)
-	mapped := make(Nums, size)
-	for i, k := range nums {
-		mapped[i] = Num{k, i}
-	}
-	sort.Sort(mapped)
-	// 以上如果已经排好序则不需要
-	for i := 0; i < size; i++ {
-		for j := i + 1; j < size && mapped[i].num + mapped[j].num <= target; j++ {
-			if mapped[i].num + mapped[j].num == target {
-				return []int{mapped[i].index, mapped[j].index}
-			}
-		}
-	}
-	return noSolu
-}
-
-// O(NlogN) 算法
-func algo3() []int {
-	size := len(nums)
-	mapped := make(Nums, size)
-	for i, k := range nums {
-		mapped[i] = Num{k, i}
-	}
-	sort.Sort(mapped)
-	// 以上如果已经排好序则不需要
-	for _, k := range mapped {
-		ret := sort.Search(size, func(j int) bool { return mapped[j].num >= target - k.num })
-		if ret != size {
-			return []int{k.index, mapped[ret].index}
 		}
 	}
 	return noSolu
