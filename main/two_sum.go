@@ -1,71 +1,14 @@
-
 package main
 
-import (
-	"fmt"
-	"sync"
-)
-
-var (
-	nums   = []int{2, 7, 11, 15}
-	noSolu = []int{-1, -1}
-	target = 26
-	wg     sync.WaitGroup
-)
-
-type Num struct {
-	num, index int
-}
-
-type Nums []Num
-
-func (slice Nums) Len() int {
-	return len(slice)
-}
-
-func (slice Nums) Less(i, j int) bool {
-	return slice[i].num < slice[j].num
-}
-
-func (slice Nums) Swap(i, j int) {
-	slice[i], slice[j] = slice[j], slice[i]
-}
-
-// 普通暴力 O(N^2)
-func algo1() []int {
-	size := len(nums)
-	for i := 0; i < size; i++ {
-		for j := i + 1; j < size; j++ {
-			if nums[i] + nums[j] == target {
-				return []int{i, j}
-			}
+//方法一 暴力枚举 这种方法的算法复杂度为o(n2)
+//方法二 如下 复杂度为o()/n
+func twoSum(nums []int, target int) []int {
+	var sumMap = make(map[int]int)
+	for k, v := range nums {
+		if i, ok := sumMap[target-v]; ok {
+			return []int{k, i}
 		}
+		sumMap[v] = k
 	}
-	return noSolu
-}
-
-// O(1) 算法（滑稽
-func algo4() (ret []int){
-	ret = noSolu
-	size := len(nums)
-	wg.Add((size - 1) * size / 2)
-	for i := 0; i < size; i++ {
-		for j := i + 1; j < size; j++ {
-			go func(i, j int) {
-				if nums[i] + nums[j] == target {
-					ret = []int{i, j}
-				}
-				wg.Done()
-			}(i, j)
-		}
-	}
-	wg.Wait()
-	return
-}
-
-func main() {
-	fmt.Println(algo1())
-	fmt.Println(algo2())
-	fmt.Println(algo3())
-	fmt.Println(algo4())
+	return []int{-1, -1}
 }
