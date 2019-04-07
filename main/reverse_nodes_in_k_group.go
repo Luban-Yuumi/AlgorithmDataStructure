@@ -25,18 +25,13 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	if k <= 1 || head == nil {
 		return head
 	}
-	slice := make([]*ListNode, 10)
+	var slice []*ListNode
 	i := 0
 	for head != nil {
-		if i > len(slice)-1 {
-			slice = append(slice, head) //修复index out of range 问题
-		} else {
-			slice[i] = head
-		}
+		slice = append(slice, head)
 		head = head.Next
-		i++
 	}
-	num := i
+	num := len(slice)
 	start := 0
 	if num < k {
 		return cur //head 后面被覆盖了 修复
