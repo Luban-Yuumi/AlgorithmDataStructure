@@ -7,24 +7,20 @@ type TreeNode struct {
 }
 
 func isValidBST(root *TreeNode) bool {
-	var pre = make([]*TreeNode, 1)
-	return helper(root, pre)
+	var prev = make([]*TreeNode, 1)
+	return helper(root, prev)
 }
 
 func helper(root *TreeNode, prev []*TreeNode) bool {
 	if root == nil {
 		return true
 	}
-
 	if !helper(root.Left, prev) {
 		return false
 	}
-
-	if prev != nil && prev[0].Val >= root.Val {
+	if prev[0] != nil && prev[0].Val >= root.Val {
 		return false
 	}
-
 	prev[0] = root
-
 	return helper(root.Right, prev)
 }

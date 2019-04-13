@@ -13,17 +13,16 @@ func main() {
 
 func maxSlidingWindow(nums []int, k int) []int {
 	windows, res := []int{}, []int{}
-	for i, v := range nums {
+	for i := 0; i < len(nums); i++ {
 		if len(windows) > 0 && windows[0] <= i-k {
 			windows = windows[1:]
 		}
-		for len(windows) > 0 && v >= nums[windows[len(windows)-1]] { //删除数组中所有比他小的元素
+		for len(windows) > 0 && nums[i] >= nums[windows[len(windows)-1]] {
 			windows = windows[:len(windows)-1]
 		}
 		windows = append(windows, i)
-		fmt.Println(windows)
 		if i >= k-1 {
-			res = append(res, nums[windows[0]]) //注意我们存的是下标
+			res = append(res, nums[windows[0]])
 		}
 	}
 	return res

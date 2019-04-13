@@ -26,7 +26,6 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 		return head
 	}
 	var slice []*ListNode
-	i := 0
 	for head != nil {
 		slice = append(slice, head)
 		head = head.Next
