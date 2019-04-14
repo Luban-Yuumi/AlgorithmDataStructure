@@ -23,15 +23,19 @@ func myPowIteration(x float64, n int) float64 {
 	if n == 0 {
 		return 1
 	}
-	var res float64 = 1
+	if n < 0 {
+		x = 1 / x
+		n = -n
+	}
+	pow := 1.0
 	for n > 0 {
-		if n&1 > 0 {
-			res *= x
+		if n&1 > 0 { //奇数多乘个s
+			pow *= x
 		}
 		x *= x
 		n >>= 1
 	}
-	return res
+	return pow
 }
 
 func main() {
