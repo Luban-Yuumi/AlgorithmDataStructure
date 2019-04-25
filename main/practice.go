@@ -1,39 +1,28 @@
 package main
 
-import "fmt"
+import "math"
 
-//方法一暴力循环乘法,时间复杂度o（n）
-//方法二 分治思想 时间复杂度o(logn)
-//递归
-func myPowResursive(x float64, n int) float64 {
-	if n == 0 {
-		return 1
+func minDistance(word1 string, word2 string) int {
+	n := len(word1)
+	m := len(word2)
+	dp := make([][]int, n+1)
+	for v := range dp {
+		dp[v] = make([]int, m+1)
 	}
-	if n < 0 {
-		return 1 / myPowResursive(x, -n)
+	for i := 0; i <= n; i++ {
+		dp[i][0] = i
 	}
-	if n%2 > 0 {
-		return x * myPowResursive(x, n-1)
+	for i := 0; i <= m; i++ {
+		dp[0][i] = i
 	}
-	return myPowResursive(x*x, n/2)
-}
-
-//迭代
-func myPowIteration(x float64, n int) float64 {
-	if n == 0 {
-		return 1
-	}
-	var res float64 = 1
-	for n > 0 {
-		if n&1 > 0 {
-			res *= x
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= m; j++ {
+			if word2[j-1] == word1[i-1] {
+				dp[i][j] = dp[i-1][j-1]
+			} else {
+				dp[i][j] = int(math.Min(float64(dp[i][j-1]), math.Min(float64(dp[i-1][j]), float64(dp[i-1][j-1])))) + 1
+			}
 		}
-		x *= x
-		n >>= 1
 	}
-	return res
-}
-
-func main() {
-	fmt.Println(myPowIteration(2.0, 5))
+	return dp[n][m]
 }
