@@ -1,28 +1,35 @@
 package main
 
-import "math"
+import "fmt"
 
-func minDistance(word1 string, word2 string) int {
-	n := len(word1)
-	m := len(word2)
-	dp := make([][]int, n+1)
-	for v := range dp {
-		dp[v] = make([]int, m+1)
-	}
-	for i := 0; i <= n; i++ {
-		dp[i][0] = i
-	}
-	for i := 0; i <= m; i++ {
-		dp[0][i] = i
-	}
-	for i := 1; i <= n; i++ {
-		for j := 1; j <= m; j++ {
-			if word2[j-1] == word1[i-1] {
-				dp[i][j] = dp[i-1][j-1]
-			} else {
-				dp[i][j] = int(math.Min(float64(dp[i][j-1]), math.Min(float64(dp[i-1][j]), float64(dp[i-1][j-1])))) + 1
-			}
-		}
-	}
-	return dp[n][m]
+//给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+//
+//示例:
+//
+//给定 1->2->3->4, 你应该返回 2->1->4->3.
+//说明:
+//
+//你的算法只能使用常数的额外空间。
+//你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func main() {
+	var a, b, c, d  = new(ListNode),new(ListNode),new(ListNode),new(ListNode)
+	a.Val = 1
+	a.Next = b
+	b.Val = 2
+	b.Next = c
+	c.Val = 3
+	c.Next = d
+	d.Val = 4
+	fmt.Printf("%d->%d->%d->%d\n", a.Val, b.Val, c.Val, d.Val)
+	result := swapPairs(a)
+	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
+}
+func swapPairs(head *ListNode) *ListNode {
+
 }
