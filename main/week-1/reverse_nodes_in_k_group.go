@@ -20,40 +20,37 @@ func main() {
 	result := reverseKGroup(a, 2)
 	fmt.Printf("%d->%d->%d->%d", result.Value, result.Next.Value, result.Next.Next.Value, result.Next.Next.Next.Value)
 }
+
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	cur := head
-	if k <= 1 || head == nil {
+	if head == nil || k <= 1 {
 		return head
 	}
 	var slice []*ListNode
 	for head != nil {
-		slice = append(slice, head)
-		head = head.Next
+		slice, head = append(slice, head), head.Next
 	}
+
 	num := len(slice)
-	start := 0
 	if num < k {
-		return cur //head 后面被覆盖了 修复
-	} else {
-		newHead := slice[k-1]
-		for num >= k {
-			if num-k >= k {
-				slice[start].Next = slice[start+(2*k)-1] //如果后面要反转的话，首节点的next就会是反转之后的节点
-			} else {
-				if num == k {
-					slice[start].Next = nil //修复index out of range
-				} else {
-					slice[start].Next = slice[start+k]
-				}
-			}
-
-			for i := start + 1; i < k+start; i++ {
-				slice[i].Next = slice[i-1]
-			}
-			num = num - k
-			start = start + k
-		}
-		return newHead
+		return slice[0]
 	}
 
+	result := slice[k-1]
+	start := 0
+	for num >= k {
+		if num >= 2*k {
+			slice[start].Next = slice[start+2*k-1]
+		} else if num == k {
+			slice[start].Next = nil //注意
+		} else {
+			slice[start].Next = slice[start+k]
+		}
+		for i := start + k - 1; i > start; i-- {
+			slice[i].Next = slice[i-1]
+		}
+		start = start + k
+		num = num - k
+	}
+	return result
 }
+

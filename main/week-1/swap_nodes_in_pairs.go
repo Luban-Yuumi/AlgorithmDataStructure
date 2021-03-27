@@ -30,16 +30,19 @@ func main() {
 	result := swapPairs(a)
 	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
 }
+
+
 func swapPairs(head *ListNode) *ListNode {
-	var pre = new(ListNode)
 	if head == nil || head.Next == nil {
 		return head
 	}
-	var result  = head.Next
-	for head != nil && head.Next !=nil  {
-			a,b := head,head.Next
-			pre.Next,a.Next,b.Next,pre = b,b.Next,a,a //重点在于每一次两两交换后，要将上一次两两交换的尾节点的next更新为当前交换后的首节点
-			head = a.Next
+	var prev *ListNode
+	result := head.Next
+	for head != nil && head.Next != nil {
+		if prev != nil {
+			prev.Next = head.Next
+		}
+		head, head.Next, head.Next.Next, prev = head.Next.Next, head.Next.Next, head, head
 	}
 	return result
 }
