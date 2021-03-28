@@ -1,17 +1,24 @@
-package main
+package day3
 
 import "reflect"
 
 //方法一：通过排序函数 然后再做对比 复杂度Nlogn
 //方法二如下
 func isAnagram(s string, t string) bool {
-	map1 := make(map[string]int)
-	map2 := make(map[string]int)
+	if len(s) != len(t) {
+		return false
+	}
+	var (
+		mapS = make(map[rune]int)
+		mapT = make(map[rune]int)
+	)
 	for _, v := range s {
-		map1[string(v)] += 1
+		mapS[v] += 1
 	}
 	for _, v := range t {
-		map2[string(v)] += 1
+		mapT[v] += 1
 	}
-	return reflect.DeepEqual(map1, map2)
+
+	return reflect.DeepEqual(mapS, mapT)
 }
+
