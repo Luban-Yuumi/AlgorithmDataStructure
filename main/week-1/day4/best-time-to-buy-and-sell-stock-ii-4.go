@@ -5,9 +5,9 @@ package main
 //方法三动态规划 o(n)
 func maxProfit(prices []int) int {
 	var money int
-	for i, v := range prices {
-		if i != 0 && v > prices[i-1] {
-			money += v - prices[i-1]
+	for i, _ := range prices {
+		if i > 0 && prices[i] > prices[i-1] {
+			money += prices[i] - prices[i-1]
 		}
 	}
 	return money

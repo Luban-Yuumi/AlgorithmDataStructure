@@ -2,12 +2,6 @@ package main
 
 import "container/list"
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 //方法一BFS广度优先搜索
 //方法二深度优先搜索
 func levelOrderBranch(root *TreeNode) [][]int {

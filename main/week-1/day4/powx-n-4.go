@@ -5,17 +5,17 @@ import "fmt"
 //方法一暴力循环乘法,时间复杂度o（n）
 //方法二 分治思想 时间复杂度o(logn)
 //递归
-func myPowResursive(x float64, n int) float64 {
+func myPow(x float64, n int) float64 {
 	if n == 0 {
 		return 1
+	} else if n == 1 {
+		return x
+	} else if n < 0 {
+		return 1 / myPow(x, -n)
+	} else if n%2 > 0 {
+		return x * myPow(x, n-1)
 	}
-	if n < 0 {
-		return 1 / myPowResursive(x, -n)
-	}
-	if n%2 > 0 {
-		return x * myPowResursive(x, n-1)
-	}
-	return myPowResursive(x*x, n/2)
+	return myPow(x*x, n/2)
 }
 
 //迭代
