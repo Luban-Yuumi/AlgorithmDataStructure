@@ -18,7 +18,7 @@ func treeHelper(res *[]int, root *TreeNode) {
 	}
 
 	*res = append(*res, root.Val)
-	treeHelper(res, root.Lef)
+	treeHelper(res, root.Left)
 	treeHelper(res, root.Right)
 }
 

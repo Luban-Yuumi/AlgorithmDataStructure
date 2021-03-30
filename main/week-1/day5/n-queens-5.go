@@ -1,4 +1,4 @@
-package main
+package day5
 
 func solveNQueens(n int) [][]string {
 	col, pie, na := make(map[int]struct{}), make(map[int]struct{}), make(map[int]struct{})

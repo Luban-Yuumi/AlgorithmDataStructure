@@ -1,12 +1,6 @@
-package main
+package day5
 
 import "math"
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
 
 func minDepth(root *TreeNode) int {
 	if root == nil {
@@ -14,7 +8,8 @@ func minDepth(root *TreeNode) int {
 	}
 	if root.Left == nil || root.Right == nil {
 		return 1 + minDepth(root.Left) + minDepth(root.Right)
-	} else {
-		return 1 + int(math.Min(float64(minDepth(root.Left)), float64(minDepth(root.Right))))
 	}
+
+	return 1 + int(math.Min(float64(minDepth(root.Left)), float64(minDepth(root.Right))))
+
 }

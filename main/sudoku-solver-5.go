@@ -1,6 +1,5 @@
 package main
 
-import "fmt"
 
 func solveSudoku(board [][]byte)  {
 	solveSudoku1(board)
