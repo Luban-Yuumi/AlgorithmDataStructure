@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package day6
 
 type Trie struct {
 	storage map[byte]*Trie
@@ -50,43 +48,42 @@ func (this *Trie) StartsWith(prefix string) bool {
 }
 
 func findWords(board [][]byte, words []string) []string {
-	if len(words) == 0 || len(board) == 0 {
-		return nil
+	var (
+		trie = Constructor()
+		res  []string
+		n    = len(board)
+		m    = len(board[0])
+	)
+	for i := range words {
+		trie.Insert(words[i])
 	}
-	var trie = Constructor()
-	var res []string
-	for _, v := range words {
-		trie.Insert(v)
-	}
-	m, n := len(board), len(board[0])
-	visit := make(map[byte]int)
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
-			_dfs(board, i, j, &trie, "", &res, visit)
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			findWordsDfs(board, &trie, n, m, i, j, "", &res) //每个位置都要作为开始点
 		}
 	}
 	return res
 }
 
-func _dfs(board [][]byte, m int, n int, currentTrie *Trie, word string, res *[]string, visit map[byte]int) {
-	if m >= len(board) || n >= len(board[0]) || n < 0 || m < 0 {
+func findWordsDfs(board [][]byte, trie *Trie, n, m, i, j int, word string, res *[]string) {
+	if i < 0 || j < 0 || i >= n || j >= m || board[i][j] == '@' {
 		return
 	}
-	if _, ok := visit[board[m][n]]; ok {
+	tmp := board[i][j]
+	word = word + string(tmp)
+
+	if !trie.StartsWith(string(tmp)) {
 		return
 	}
-	word += string(board[m][n])
-	fmt.Println(word)
-	if !currentTrie.StartsWith(word) {
-		return
-	}
-	if currentTrie.Search(word) {
+	if trie.Search(string(tmp)) {
 		*res = append(*res, word)
+		trie.storage[tmp].storage['#'] = nil // 防止出现重复单词
 	}
-	visit[board[m][n]] = 1
-	_dfs(board, m+1, n, currentTrie, word, res, visit)
-	_dfs(board, m-1, n, currentTrie, word, res, visit)
-	_dfs(board, m, n+1, currentTrie, word, res, visit)
-	_dfs(board, m, n-1, currentTrie, word, res, visit)
-	delete(visit, board[m][n])
+	board[i][j] = '@'
+	findWordsDfs(board, trie.storage[tmp], n, m, i+1, j, word, res)
+	findWordsDfs(board, trie.storage[tmp], n, m, i-1, j, word, res)
+	findWordsDfs(board, trie.storage[tmp], n, m, i, j+1, word, res)
+	findWordsDfs(board, trie.storage[tmp], n, m, i, j-1, word, res)
+	board[i][j] = tmp
+	return
 }

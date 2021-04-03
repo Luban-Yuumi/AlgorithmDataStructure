@@ -1,4 +1,4 @@
-package main
+package day7
 
 //爬楼梯问题  = fibonacci
 func climbStairs(n int) int {

@@ -4,11 +4,11 @@ func solveNQueens(n int) [][]string {
 	col, pie, na := make(map[int]struct{}), make(map[int]struct{}), make(map[int]struct{})
 	s := make([]string, n)
 	res := new([][]string)
-	helper(n, 1, col, pie, na, res, s)
+	queenHelper(n, 1, col, pie, na, res, s)
 	return *res
 }
 
-func helper(n int, row int, col map[int]struct{}, pie map[int]struct{}, na map[int]struct{}, res *[][]string, s []string) {
+func queenHelper(n int, row int, col map[int]struct{}, pie map[int]struct{}, na map[int]struct{}, res *[][]string, s []string) {
 	if row > n {
 		tmp := make([]string, n)
 		copy(tmp, s)
@@ -38,7 +38,7 @@ func helper(n int, row int, col map[int]struct{}, pie map[int]struct{}, na map[i
 			}
 		}
 		s[row-1] = str
-		helper(n, row+1, col, pie, na, res, s)
+		queenHelper(n, row+1, col, pie, na, res, s)
 		delete(col, j)
 		delete(pie, j+row)
 		delete(na, j-row)

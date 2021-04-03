@@ -1,4 +1,5 @@
-package main
+
+package day7
 
 //思路不用每次循环去计算数目 通过递推获取目标值的数目
 func countBits(num int) []int {

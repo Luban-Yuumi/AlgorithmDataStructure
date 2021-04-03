@@ -1,8 +1,10 @@
-package main
+package day7
 
 import (
 	"fmt"
 )
+
+// x & (x-1) 删除最后一位的1 x & -x 获得最后一位的1
 
 //方法1 二进制每次与2取余数 有余数计数器加1然后数字往右移一位 由于int类型的最大长度已知 所以时间复杂度 为o(1)
 
@@ -28,5 +30,5 @@ func hammingWeight(num uint32) int {
 }
 
 func main() {
-	fmt.Println(hammingWeight(3))
+	fmt.Println(hammingWeight(-1))
 }
