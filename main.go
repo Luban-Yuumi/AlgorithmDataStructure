@@ -1,22 +1,48 @@
 package main
 
-func generateParenthesis(n int) []string {
-	var res []string
-	helper(n, n, "", &res)
-	return res
+type Trie struct {
+	isEnd   bool
+	nextMap map[rune]*Trie
 }
 
-func helper(left int, right int, str string, res *[]string) {
-	if right == 0 {
-		*res = append(*res, str)
-		return
+/** Initialize your data structure here. */
+func Constructor() Trie {
+	return Trie{
+		nextMap: map[rune]*Trie{},
 	}
+}
 
-	if left > 0 {
-		helper(left-1, right, str+"(", res)
+/** Inserts a word into the trie. */
+func (this *Trie) Insert(word string) {
+	for _, v := range word {
+		if _, ok := this.nextMap[v]; !ok {
+			this.nextMap[v] = &Trie{
+				nextMap: map[rune]*Trie{},
+			}
+		}
+		this = this.nextMap[v]
 	}
-	if right > left {
-		helper(left, right-1, str+")", res)
+	this.isEnd = true
+}
+
+/** Returns if the word is in the trie. */
+func (this *Trie) Search(word string) bool {
+	for _, v := range word {
+		if _, ok := this.nextMap[v]; !ok {
+			return false
+		}
+		this = this.nextMap[v]
 	}
-	return
+	return this.isEnd
+}
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+func (this *Trie) StartsWith(prefix string) bool {
+	for _, v := range prefix {
+		if _, ok := this.nextMap[v]; !ok {
+			return false
+		}
+		this = this.nextMap[v]
+	}
+	return true
 }

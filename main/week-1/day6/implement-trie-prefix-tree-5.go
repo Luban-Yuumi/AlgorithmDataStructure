@@ -1,54 +1,48 @@
 package day6
 
-const END_OF_WORLD = '#'
-
 type Trie struct {
-	storage map[byte]*Trie
+	isEnd   bool
+	nextMap map[rune]*Trie
 }
 
 /** Initialize your data structure here. */
 func Constructor() Trie {
-	var root = Trie{
-		make(map[byte]*Trie),
+	return Trie{
+		nextMap: map[rune]*Trie{},
 	}
-	return root
 }
 
 /** Inserts a word into the trie. */
 func (this *Trie) Insert(word string) {
-	charSet := []byte(word)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
-			newTrie := Constructor()
-			this.storage[v] = &newTrie
+	for _, v := range word {
+		if _, ok := this.nextMap[v]; !ok {
+			this.nextMap[v] = &Trie{
+				nextMap: map[rune]*Trie{},
+			}
 		}
-		this = this.storage[v]
+		this = this.nextMap[v]
 	}
-	this.storage[END_OF_WORLD] = &Trie{nil}
+	this.isEnd = true
 }
 
 /** Returns if the word is in the trie. */
 func (this *Trie) Search(word string) bool {
-	charSet := []byte(word)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
+	for _, v := range word {
+		if _, ok := this.nextMap[v]; !ok {
 			return false
-		} else {
-			this = this.storage[v]
 		}
+		this = this.nextMap[v]
 	}
-	return this.storage[END_OF_WORLD] != nil
+	return this.isEnd
 }
 
 /** Returns if there is any word in the trie that starts with the given prefix. */
 func (this *Trie) StartsWith(prefix string) bool {
-	charSet := []byte(prefix)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
+	for _, v := range prefix {
+		if _, ok := this.nextMap[v]; !ok {
 			return false
-		} else {
-			this = this.storage[v]
 		}
+		this = this.nextMap[v]
 	}
 	return true
 }
