@@ -10,7 +10,7 @@ func (s *queues) Pop() (v int) {
 	v = (*s)[0]
 	if n > 1 {
 		*s = (*s)[1:]
-	}else {
+	} else {
 		*s = nil
 	}
 	return
@@ -26,7 +26,7 @@ type MyStack struct {
 }
 
 /** Initialize your data structure here. */
-func Constructor() MyStack {
+func ConstructorStack() MyStack {
 	return MyStack{}
 }
 

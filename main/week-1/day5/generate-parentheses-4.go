@@ -5,19 +5,22 @@ package day5
 //（1）左括号数目 右括号数目都小于n
 // (2) 左括号数目总是要大于等于右括号数目的
 func generateParenthesis(n int) []string {
-	var res = new([]string)
-	helper(n, 0, 0, "", res)
-	return *res
+	var res []string
+	helper(n, n, "", &res)
+	return res
 }
 
-func helper(n int, left int, right int, s string, res *[]string) {
-	if right == n {
-		*res = append(*res, s)
+func helper(left int, right int, str string, res *[]string) {
+	if right == 0 {
+		*res = append(*res, str)
+		return
 	}
-	if left < n {
-		helper(n, left+1, right, s+"(", res)
+
+	if left > 0 {
+		helper(left-1, right, str+"(", res)
 	}
-	if right < left {
-		helper(n, left, right+1, s+")", res)
+	if right > left {
+		helper(left, right-1, str+")", res)
 	}
+	return
 }

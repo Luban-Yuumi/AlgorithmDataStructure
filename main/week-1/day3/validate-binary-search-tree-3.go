@@ -25,22 +25,26 @@ func main() {
 }
 
 func isValidBST(root *TreeNode) bool {
-	var prev = []*TreeNode{nil}
-	return helper(root, prev)
+	var prev = []*int{nil}
+	return bstHelper(root, prev)
 }
 
-func helper(root *TreeNode, prev []*TreeNode) bool {
+func bstHelper(root *TreeNode, prev []*int) bool {
 	if root == nil {
 		return true
 	}
 
-	if !helper(root.Left, prev) {
+	if !bstHelper(root.Left, prev) {
 		return false
 	}
-	if prev[0] != nil && root.Val <= prev[0].Val {
+
+	if prev[0] != nil && *prev[0] >= root.Val {
 		return false
 	}
-	//prev = root 这样赋值不会改变函数外prev
-	prev[0] = root
-	return helper(root.Right, prev)
+	if prev[0] == nil {
+		prev[0] = new(int)
+	}
+	*prev[0] = root.Val
+
+	return bstHelper(root.Right, prev)
 }

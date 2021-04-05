@@ -1,8 +1,8 @@
 package day2
 
-type stack []int
+type stackInt []int
 
-func (s *stack) Pop() (v int) {
+func (s *stackInt) Pop() (v int) {
 	n := len(*s)
 	if n == 0 {
 		return
@@ -12,17 +12,17 @@ func (s *stack) Pop() (v int) {
 	return
 }
 
-func (s *stack) Push(v int) {
+func (s *stackInt) Push(v int) {
 	*s = append(*s, v)
 }
 
 type MyQueue struct {
-	in  stack
-	out stack
+	in  stackInt
+	out stackInt
 }
 
 /** Initialize your data structure here. */
-func Constructor() MyQueue {
+func ConstructorQuene() MyQueue {
 	return MyQueue{}
 }
 

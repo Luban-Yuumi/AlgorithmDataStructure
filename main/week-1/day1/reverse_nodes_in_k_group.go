@@ -2,23 +2,18 @@ package main
 
 import "fmt"
 
-type ListNode struct {
-	Next  *ListNode
-	Value int
-}
-
 func main() {
 	var a, b, c, d = new(ListNode), new(ListNode), new(ListNode), new(ListNode)
-	a.Value = 1
+	a.Val = 1
 	a.Next = b
-	b.Value = 2
+	b.Val = 2
 	b.Next = c
-	c.Value = 3
+	c.Val = 3
 	c.Next = d
-	d.Value = 4
-	fmt.Printf("%d->%d->%d->%d\n", a.Value, b.Value, c.Value, d.Value)
+	d.Val = 4
+	fmt.Printf("%d->%d->%d->%d\n", a.Val, b.Val, c.Val, d.Val)
 	result := reverseKGroup(a, 2)
-	fmt.Printf("%d->%d->%d->%d", result.Value, result.Next.Value, result.Next.Next.Value, result.Next.Next.Next.Value)
+	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
 }
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
@@ -53,4 +48,3 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	}
 	return result
 }
-

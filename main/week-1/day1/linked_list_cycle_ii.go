@@ -4,11 +4,6 @@ import (
 	"fmt"
 )
 
-type ListNode struct {
-	Next  *ListNode
-	Value int
-}
-
 func main() {
 	a, b, c, d := new(ListNode), new(ListNode), new(ListNode), new(ListNode)
 	a.Next = b

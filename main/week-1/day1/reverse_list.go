@@ -3,23 +3,18 @@ package main
 import "fmt"
 
 //单链表反转
-type ListNode struct {
-	Next  *ListNode
-	Value int
-}
-
 var prev *ListNode = nil
 
 func main() {
 	var l1, l2, l3 = new(ListNode), new(ListNode), new(ListNode)
-	l1.Value = 1
+	l1.Val = 1
 	l1.Next = l2
-	l2.Value = 2
+	l2.Val = 2
 	l2.Next = l3
-	l3.Value = 3
-	fmt.Printf("the now list : %v -> %v -> %v", l1.Value, l2.Value, l3.Value)
+	l3.Val = 3
+	fmt.Printf("the now list : %v -> %v -> %v", l1.Val, l2.Val, l3.Val)
 	head := reverseRecursive(l1)
-	fmt.Printf("the now list : %v -> %v -> %v", head.Value, head.Next.Value, head.Next.Next.Value)
+	fmt.Printf("the now list : %v -> %v -> %v", head.Val, head.Next.Val, head.Next.Next.Val)
 }
 
 //递归

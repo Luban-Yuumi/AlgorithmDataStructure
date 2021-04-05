@@ -18,7 +18,7 @@ type ListNode struct {
 }
 
 func main() {
-	var a, b, c, d  = new(ListNode),new(ListNode),new(ListNode),new(ListNode)
+	var a, b, c, d = new(ListNode), new(ListNode), new(ListNode), new(ListNode)
 	a.Val = 1
 	a.Next = b
 	b.Val = 2
@@ -31,18 +31,19 @@ func main() {
 	fmt.Printf("%d->%d->%d->%d", result.Val, result.Next.Val, result.Next.Next.Val, result.Next.Next.Next.Val)
 }
 
-
 func swapPairs(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	var prev *ListNode
-	result := head.Next
+	var (
+		prev *ListNode
+		res  = head.Next
+	)
 	for head != nil && head.Next != nil {
 		if prev != nil {
 			prev.Next = head.Next
 		}
 		head, head.Next, head.Next.Next, prev = head.Next.Next, head.Next.Next, head, head
 	}
-	return result
+	return res
 }
