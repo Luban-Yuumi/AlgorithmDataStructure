@@ -1,7 +1,5 @@
 package day6
 
-
-
 func findWords(board [][]byte, words []string) []string {
 	var (
 		trie = Constructor()
@@ -24,7 +22,7 @@ func findWordsDfs(board [][]byte, trie *Trie, n, m, i, j int, word string, res *
 	if i < 0 || j < 0 || i >= n || j >= m || board[i][j] == '@' {
 		return
 	}
-	tmp := board[i][j]
+	tmp := rune(board[i][j])
 	word = word + string(tmp)
 
 	if !trie.StartsWith(string(tmp)) {
@@ -32,13 +30,13 @@ func findWordsDfs(board [][]byte, trie *Trie, n, m, i, j int, word string, res *
 	}
 	if trie.Search(string(tmp)) {
 		*res = append(*res, word)
-		trie.storage[tmp].storage['#'] = nil // 防止出现重复单词
+		trie.nextMap[tmp].isEnd = false // 防止出现重复单词
 	}
 	board[i][j] = '@'
-	findWordsDfs(board, trie.storage[tmp], n, m, i+1, j, word, res)
-	findWordsDfs(board, trie.storage[tmp], n, m, i-1, j, word, res)
-	findWordsDfs(board, trie.storage[tmp], n, m, i, j+1, word, res)
-	findWordsDfs(board, trie.storage[tmp], n, m, i, j-1, word, res)
-	board[i][j] = tmp
+	findWordsDfs(board, trie.nextMap[tmp], n, m, i+1, j, word, res)
+	findWordsDfs(board, trie.nextMap[tmp], n, m, i-1, j, word, res)
+	findWordsDfs(board, trie.nextMap[tmp], n, m, i, j+1, word, res)
+	findWordsDfs(board, trie.nextMap[tmp], n, m, i, j-1, word, res)
+	board[i][j] = byte(tmp)
 	return
 }

@@ -7,17 +7,14 @@ func main() {
 }
 
 //方法1 二分法
-func mySqrt1(x int) int {
-	if x == 0 || x == 1 {
-		return x
-	}
-	left, right := 1, x
-	var res int
-	for right-left >= 0 {
+func mySqrt(x int) int {
+	left, right, res := 0, x, 0
+	for left <= right {
 		mid := (left + right) / 2
-		if mid*mid == x {
+		data := mid * mid
+		if data == x {
 			return mid
-		} else if mid*mid > x {
+		} else if data > x {
 			right = mid - 1
 		} else {
 			left = mid + 1
@@ -27,8 +24,9 @@ func mySqrt1(x int) int {
 	return res
 }
 
+
 //方法2牛顿迭代法
-func mySqrt(x int) int {
+func mySqrtNiu(x int) int {
 	if x == 0 || x == 1 {
 		return x
 	}

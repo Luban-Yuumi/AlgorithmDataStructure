@@ -4,7 +4,7 @@ import "math"
 
 func coinChange(coins []int, amount int) int {
 	if amount == 0 || len(coins) == 0 {
-		return 0
+		return -1
 	}
 	dp := make([]int, amount+1)
 	for i := 1; i <= amount; i++ {

@@ -1,48 +1,23 @@
 package main
 
-type Trie struct {
-	isEnd   bool
-	nextMap map[rune]*Trie
-}
+import "math"
 
-/** Initialize your data structure here. */
-func Constructor() Trie {
-	return Trie{
-		nextMap: map[rune]*Trie{},
+func maxProduct(nums []int) int {
+	n := len(nums)
+	if n == 0 {
+		return 0
 	}
-}
+	var dp [2][2]int
+	dp[0][0] = nums[0]
+	dp[0][1] = nums[0]
+	var res = dp[0][0]
 
-/** Inserts a word into the trie. */
-func (this *Trie) Insert(word string) {
-	for _, v := range word {
-		if _, ok := this.nextMap[v]; !ok {
-			this.nextMap[v] = &Trie{
-				nextMap: map[rune]*Trie{},
-			}
-		}
-		this = this.nextMap[v]
+	for i := 1; i < len(nums); i++ {
+		x, y := i&1, (i-1)&1
+		dp[x][0] = int(math.Max(math.Max(float64(dp[y][0]*nums[i]), float64(dp[y][1]*nums[i])), float64(nums[i])))
+		dp[x][1] = int(math.Min(math.Min(float64(dp[y][0]*nums[i]), float64(dp[y][1]*nums[i])), float64(nums[i])))
+		res = int(math.Max(float64(res), float64(dp[x][0])))
 	}
-	this.isEnd = true
-}
 
-/** Returns if the word is in the trie. */
-func (this *Trie) Search(word string) bool {
-	for _, v := range word {
-		if _, ok := this.nextMap[v]; !ok {
-			return false
-		}
-		this = this.nextMap[v]
-	}
-	return this.isEnd
-}
-
-/** Returns if there is any word in the trie that starts with the given prefix. */
-func (this *Trie) StartsWith(prefix string) bool {
-	for _, v := range prefix {
-		if _, ok := this.nextMap[v]; !ok {
-			return false
-		}
-		this = this.nextMap[v]
-	}
-	return true
+	return res
 }
