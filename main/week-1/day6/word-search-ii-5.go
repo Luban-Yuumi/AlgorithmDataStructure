@@ -1,51 +1,6 @@
 package day6
 
-type Trie struct {
-	storage map[byte]*Trie
-}
 
-/** Initialize your data structure here. */
-func Constructor() Trie {
-	return Trie{
-		make(map[byte]*Trie),
-	}
-}
-
-/** Inserts a word into the trie. */
-func (this *Trie) Insert(word string) {
-	charSet := []byte(word)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
-			this.storage[v] = &Trie{make(map[byte]*Trie)}
-		}
-		this = this.storage[v]
-	}
-	this.storage['#'] = &Trie{nil}
-}
-
-/** Returns if the word is in the trie. */
-func (this *Trie) Search(word string) bool {
-	charSet := []byte(word)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
-			return false
-		}
-		this = this.storage[v]
-	}
-	return this.storage['#'] != nil
-}
-
-/** Returns if there is any word in the trie that starts with the given prefix. */
-func (this *Trie) StartsWith(prefix string) bool {
-	charSet := []byte(prefix)
-	for _, v := range charSet {
-		if this.storage[v] == nil {
-			return false
-		}
-		this = this.storage[v]
-	}
-	return true
-}
 
 func findWords(board [][]byte, words []string) []string {
 	var (

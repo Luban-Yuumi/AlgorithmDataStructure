@@ -1,22 +1,52 @@
 package main
 
-import "math"
+import "container/list"
 
-func coinChange(coins []int, amount int) int {
-	if amount == 0 || len(coins) == 0 {
-		return 0
+type LRUCache struct {
+	dataMap  map[int]*list.Element
+	dataList list.List
+	cap      int
+}
+
+type cacheData struct {
+	key   int
+	value int
+}
+
+func Constructor(capacity int) LRUCache {
+	return LRUCache{
+		dataMap:  make(map[int]*list.Element, capacity),
+		cap:      capacity,
+		dataList: list.List{},
 	}
-	dp := make([]int, amount+1)
-	for i := 1; i <= amount; i++ {
-		dp[i] = amount + 1
-		for _, v := range coins {
-			if i >= v {
-				dp[i] = int(math.Min(float64(dp[i]), float64(dp[i-v]+1)))
-			}
-		}
-	}
-	if dp[amount] == amount+1 {
+}
+
+func (this *LRUCache) Get(key int) int {
+	value, ok := this.dataMap[key]
+	if !ok {
 		return -1
 	}
-	return dp[amount]
+	this.dataList.MoveToFront(value)
+	return value.Value.(cacheData).value
+}
+
+func (this *LRUCache) Put(key int, value int) {
+	if oldValue, ok := this.dataMap[key]; ok {
+		tmpData := cacheData{
+			value: value,
+			key:   key,
+		}
+		oldValue.Value = tmpData
+		this.dataList.MoveToFront(oldValue)
+		return
+	}
+
+	if this.dataList.Len() >= this.cap {
+		backData := this.dataList.Back()
+		this.dataList.Remove(backData)
+		delete(this.dataMap, backData.Value.(cacheData).key)
+	}
+
+	ele := this.dataList.PushFront(cacheData{value: value, key: key})
+	this.dataMap[key] = ele
 }

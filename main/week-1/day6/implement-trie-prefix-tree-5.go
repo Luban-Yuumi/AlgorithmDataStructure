@@ -1,4 +1,4 @@
-package main
+package day6
 
 const END_OF_WORLD = '#'
 

@@ -1,4 +1,4 @@
-package main
+package day6
 
 import (
 	"container/list"
@@ -14,7 +14,7 @@ type entry struct {
 	value int
 }
 
-func Constructor(capacity int) LRUCache {
+func ConstructorLRU(capacity int) LRUCache {
 	return LRUCache{
 		capacity,
 		list.List{},
