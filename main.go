@@ -1,23 +1,49 @@
 package main
 
-import "math"
+import "fmt"
 
-func maxProduct(nums []int) int {
-	n := len(nums)
-	if n == 0 {
-		return 0
-	}
-	var dp [2][2]int
-	dp[0][0] = nums[0]
-	dp[0][1] = nums[0]
-	var res = dp[0][0]
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
 
-	for i := 1; i < len(nums); i++ {
-		x, y := i&1, (i-1)&1
-		dp[x][0] = int(math.Max(math.Max(float64(dp[y][0]*nums[i]), float64(dp[y][1]*nums[i])), float64(nums[i])))
-		dp[x][1] = int(math.Min(math.Min(float64(dp[y][0]*nums[i]), float64(dp[y][1]*nums[i])), float64(nums[i])))
-		res = int(math.Max(float64(res), float64(dp[x][0])))
+func isValidBST(root *TreeNode) bool {
+	return helper(root, make([]int, 0, 1))
+}
+
+func helper(root *TreeNode, prev []int) bool {
+	if root == nil {
+		return true
 	}
 
-	return res
+	if !helper(root.Left, prev) {
+		return false
+	}
+	fmt.Println(prev)
+
+	if len(prev) != 0 && prev[0] >= root.Val {
+		return false
+	}
+
+	if len(prev) == 0 {
+		prev = append(prev, root.Val)
+	} else {
+		prev[0] = root.Val
+	}
+	fmt.Println(root)
+	return helper(root.Right, prev)
+}
+
+func main() {
+	left := &TreeNode{
+		Val: 1,
+	}
+	root := &TreeNode{
+		Val:   1,
+		Left:  left,
+		Right: nil,
+	}
+
+	fmt.Println(isValidBST(root))
 }

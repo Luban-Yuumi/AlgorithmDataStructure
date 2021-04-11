@@ -2,6 +2,7 @@ package day3
 
 
 
+
 //时间复杂度为o(n)因为每个节点都会访问一遍
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == p || root == q || root == nil {
