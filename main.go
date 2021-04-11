@@ -1,49 +1,48 @@
 package main
 
-import "fmt"
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
+func sortArray(nums []int) []int {
+	//quickSort(nums, 0, len(nums)-1)
+	maoPaoSort(nums)
+	return nums
 }
 
-func isValidBST(root *TreeNode) bool {
-	return helper(root, make([]int, 0, 1))
-}
-
-func helper(root *TreeNode, prev []int) bool {
-	if root == nil {
-		return true
+func quickSort(nums []int, begin, end int) {
+	if begin >= end {
+		return
 	}
-
-	if !helper(root.Left, prev) {
-		return false
+	i := begin + 1
+	j := end
+	for j > i {
+		if nums[i] > nums[begin] {
+			nums[i], nums[j] = nums[j], nums[i]
+			j--
+		} else {
+			i++
+		}
 	}
-	fmt.Println(prev)
-
-	if len(prev) != 0 && prev[0] >= root.Val {
-		return false
-	}
-
-	if len(prev) == 0 {
-		prev = append(prev, root.Val)
+	mid := 0
+	if nums[i] > nums[begin] {
+		mid = i - 1
 	} else {
-		prev[0] = root.Val
+		mid = i
 	}
-	fmt.Println(root)
-	return helper(root.Right, prev)
+	nums[begin], nums[mid] = nums[mid], nums[begin]
+	quickSort(nums, begin, mid-1)
+	quickSort(nums, mid+1, end)
 }
 
-func main() {
-	left := &TreeNode{
-		Val: 1,
-	}
-	root := &TreeNode{
-		Val:   1,
-		Left:  left,
-		Right: nil,
-	}
+func maoPaoSort(nums []int) {
+	for i := 0; i < len(nums); i++ {
+		change := false
+		for j := 0; j < len(nums)-i-1; j++ {
+			if nums[j] > nums[j+1] {
+				nums[j], nums[j+1] = nums[j+1], nums[j]
+				change = true
+			}
+		}
 
-	fmt.Println(isValidBST(root))
+		if !change {
+			break
+		}
+	}
 }
