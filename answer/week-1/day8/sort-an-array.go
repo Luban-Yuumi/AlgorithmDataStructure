@@ -1,4 +1,4 @@
-package main
+package day8
 
 func sortArray(nums []int) []int {
 	//quickSort(nums, 0, len(nums)-1)

@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	nums := []int{1,2,3,4,5}
-	sort(nums)
+	charrSort(nums)
 	fmt.Println(nums)
 }
 //从第一个元素开始，该元素可以认为已经被排序；
@@ -12,7 +12,7 @@ func main() {
 //如果该元素（已排序）大于新元素，将该元素移到下一位置；
 //重复步骤3，直到找到已排序的元素小于或者等于新元素的位置；
 //将新元素插入到该位置后；最佳o(n) 最坏o(n2)
-func sort(nums []int)  {
+func charrSort(nums []int)  {
 	if len(nums)<=1 {
 		return
 	}

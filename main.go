@@ -1,48 +1,34 @@
 package main
 
-func sortArray(nums []int) []int {
-	//quickSort(nums, 0, len(nums)-1)
-	maoPaoSort(nums)
-	return nums
-}
-
-func quickSort(nums []int, begin, end int) {
-	if begin >= end {
-		return
+func isMatch(s string, p string) bool {
+	m, n := len(s), len(p)
+	dp := make([][]bool, m+1)
+	for i := 0; i <= m; i++ {
+		dp[i] = make([]bool, n+1)
 	}
-	i := begin + 1
-	j := end
-	for j > i {
-		if nums[i] > nums[begin] {
-			nums[i], nums[j] = nums[j], nums[i]
-			j--
-		} else {
-			i++
+	dp[0][0] = true
+
+	match := func(i, j int) bool {
+		if i == 0 {
+			return false
+		} else if p[j-1] == '.' {
+			return true
 		}
+		return p[j-1] == s[i-1]
 	}
-	mid := 0
-	if nums[i] > nums[begin] {
-		mid = i - 1
-	} else {
-		mid = i
-	}
-	nums[begin], nums[mid] = nums[mid], nums[begin]
-	quickSort(nums, begin, mid-1)
-	quickSort(nums, mid+1, end)
-}
 
-func maoPaoSort(nums []int) {
-	for i := 0; i < len(nums); i++ {
-		change := false
-		for j := 0; j < len(nums)-i-1; j++ {
-			if nums[j] > nums[j+1] {
-				nums[j], nums[j+1] = nums[j+1], nums[j]
-				change = true
+	for i := 0; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if p[j-1] == '*' {
+				dp[i][j] = dp[i][j-2]
+				if match(i, j-1) {
+					dp[i][j] = dp[i-1][j]
+				}
+			} else if match(i, j) {
+				dp[i][j] = dp[i-1][j-1]
 			}
 		}
-
-		if !change {
-			break
-		}
 	}
+
+	return dp[m][n]
 }
