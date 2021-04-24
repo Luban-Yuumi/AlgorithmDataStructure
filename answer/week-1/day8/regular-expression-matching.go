@@ -1,8 +1,10 @@
 package day8
 
 func isMatch(s string, p string) bool {
-	m, n := len(s), len(p)
-	matches := func(i, j int) bool {
+	n, m := len(s), len(p)
+	dp := make([][]bool, n+1)
+
+	match := func(i, j int) bool {
 		if i == 0 {
 			return false
 		}
@@ -12,22 +14,22 @@ func isMatch(s string, p string) bool {
 		return s[i-1] == p[j-1]
 	}
 
-	f := make([][]bool, m+1)
-	for i := 0; i < len(f); i++ {
-		f[i] = make([]bool, n+1)
+	for i := 0; i <= n; i++ {
+		dp[i] = make([]bool, m+1)
 	}
-	f[0][0] = true
-	for i := 0; i <= m; i++ {
-		for j := 1; j <= n; j++ {
+
+	dp[0][0] = true
+	for i := 0; i <= n; i++ {
+		for j := 1; j <= m; j++ {
 			if p[j-1] == '*' {
-				f[i][j] = f[i][j] || f[i][j-2]
-				if matches(i, j-1) {
-					f[i][j] = f[i][j] || f[i-1][j]
+				dp[i][j] = dp[i][j-2]
+				if match(i, j-1) {
+					dp[i][j] = dp[i][j] || dp[i-1][j]
 				}
-			} else if matches(i, j) {
-				f[i][j] = f[i][j] || f[i-1][j-1]
+			} else if match(i, j) {
+				dp[i][j] = dp[i-1][j-1]
 			}
 		}
 	}
-	return f[m][n]
+	return dp[n][m]
 }
