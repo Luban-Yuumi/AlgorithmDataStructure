@@ -32,18 +32,10 @@ func main() {
 }
 
 func swapPairs(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
+	hair := &ListNode{Next: head}
+	prev := hair
+	for head != nil && head.Next != nil{
+		head.Next,head.Next.Next,head,prev.Next,prev = head.Next.Next,head,head.Next.Next,head.Next,head
 	}
-	var (
-		prev *ListNode
-		res  = head.Next
-	)
-	for head != nil && head.Next != nil {
-		if prev != nil {
-			prev.Next = head.Next
-		}
-		head, head.Next, head.Next.Next, prev = head.Next.Next, head.Next.Next, head, head
-	}
-	return res
+	return hair.Next
 }
