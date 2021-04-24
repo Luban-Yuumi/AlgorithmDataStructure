@@ -1,4 +1,4 @@
-package main
+package day4
 
 type TreeNode struct {
 	Val   int

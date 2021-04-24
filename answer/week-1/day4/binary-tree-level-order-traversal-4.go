@@ -1,4 +1,4 @@
-package main
+package day4
 
 import "container/list"
 
