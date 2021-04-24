@@ -17,34 +17,29 @@ func main() {
 }
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	if head == nil || k <= 1 {
-		return head
-	}
-	var slice []*ListNode
-	for head != nil {
-		slice, head = append(slice, head), head.Next
-	}
-
-	num := len(slice)
-	if num < k {
-		return slice[0]
-	}
-
-	result := slice[k-1]
-	start := 0
-	for num >= k {
-		if num >= 2*k {
-			slice[start].Next = slice[start+2*k-1]
-		} else if num == k {
-			slice[start].Next = nil //注意
-		} else {
-			slice[start].Next = slice[start+k]
+	hair := &ListNode{Next: head}
+	prev := hair
+	for head != nil{
+		tail := prev
+		for i:= 0;i<k;i++{
+			tail = tail.Next
+			if tail == nil{
+				return hair.Next
+			}
 		}
-		for i := start + k - 1; i > start; i-- {
-			slice[i].Next = slice[i-1]
-		}
-		start = start + k
-		num = num - k
+		head,tail = myReverse(head,tail)
+		prev.Next = head
+		prev = tail
+		head = tail.Next
 	}
-	return result
+	return hair.Next
+}
+
+func myReverse (head *ListNode,tail *ListNode)(*ListNode,*ListNode){
+	prev := tail.Next
+	now := head
+	for prev != tail {
+		now,now.Next,prev = now.Next,prev,now
+	}
+	return tail,head
 }
