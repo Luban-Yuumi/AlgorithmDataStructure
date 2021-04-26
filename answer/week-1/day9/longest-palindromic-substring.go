@@ -1,4 +1,4 @@
-package main
+package day9
 
 func longestPalindrome(s string) string {
 	n := len(s)
@@ -18,7 +18,7 @@ func longestPalindrome(s string) string {
 		for i := 0; i < n; i++ {
 			j := i + l - 1
 			if j > n-1 {
-				continue loop1
+				goto loop1
 			}
 
 			if s[i] != s[j] {
