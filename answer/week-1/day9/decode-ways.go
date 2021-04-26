@@ -1,4 +1,4 @@
-package main
+package day9
 
 import "strconv"
 
