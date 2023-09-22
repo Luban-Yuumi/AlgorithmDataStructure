@@ -1,18 +1,5 @@
 package main
 
-import "fmt"
-
-func main() {
-	//recursive
-	for i := 0; i < 10; i++ {
-		fmt.Println(fibonacciRecursive(i))
-	}
-	//Iteration
-	for i := 0; i < 10; i++ {
-		fmt.Println(fibonacciIteration(i))
-	}
-}
-
 func fibonacciRecursive(i int) int {
 	if i <= 1 {
 		return i
